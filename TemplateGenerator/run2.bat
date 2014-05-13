@@ -1,0 +1,1 @@
+TemplateGenerator.exe --file test2 --count 17075 --start-count 17023 --file-template ochannel_#N#.cfg --file-start-count 12

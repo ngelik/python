@@ -1,0 +1,1 @@
+TemplateGenerator.exe --file test3 --start-count 1 --count 52
