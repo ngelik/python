@@ -1,0 +1,53 @@
+version: 1
+formatters:
+    simple:
+        format: "%(asctime)s %(name)-8s %(levelname)-8s %(filename)s[on line:%(lineno)d][%(funcName)s]# %(message)s"
+        datefmt: '%Y-%m-%d_%H:%M:%S'
+
+handlers:
+    console:
+        class: logging.StreamHandler
+        level: INFO
+        formatter: simple
+        stream: ext://sys.stdout
+
+    info_file_handler:
+        # class: logging.handlers.RotatingFileHandler
+        class: logging.handlers.TimedRotatingFileHandler
+        level: INFO
+        formatter: simple
+        filename: logs/info.log
+        backupCount: 10
+        encoding: utf8
+        when: midnight
+
+    error_file_handler:
+        # class: logging.handlers.RotatingFileHandler
+        class: logging.handlers.TimedRotatingFileHandler
+        level: ERROR
+        formatter: simple
+        filename: logs/errors.log
+        backupCount: 10
+        # encoding: utf8
+        encoding: utf8
+        when: midnight
+
+    debug_file_handler:
+        # class: logging.handlers.RotatingFileHandler
+        class: logging.handlers.TimedRotatingFileHandler
+        level: DEBUG
+        formatter: simple
+        filename: logs/debug.log
+        backupCount: 10
+        encoding: utf8
+        when: midnight
+
+loggers:
+    my_module:
+        level: INFO
+        handlers: [console]
+        propagate: no
+
+root:
+    level: DEBUG
+    handlers: [console, info_file_handler, error_file_handler, debug_file_handler]
