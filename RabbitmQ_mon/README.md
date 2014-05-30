@@ -6,27 +6,27 @@ You can monitor the following parameters:
 
 * queue availability
 
-* queue consumers
+* queue consumers count
 
-* queue messages
+* queue messages count
 
-* queue memory
+* queue memory usage
 
 * exchange availability
 
 * consumers availability
 
-* rates publish
+* rates publish count for queue
 
-* rates deliver
+* rates deliver count for queue
 
-* rates publish sum
+* rates publish sum (gets from management plugin api)
 
-* rates deliver sum
+* rates deliver sum (gets from management plugin api)
 
 *Example usage:*
 
-*zabbix_agentd.userparams.conf*
+Add to file *zabbix_agentd.userparams.conf*
 
 UserParameter=rabbitmq.queue.availability[*],/etc/zabbix/scripts/rabbitmq/rabbitmq_stat.sh list_queues $1
 
