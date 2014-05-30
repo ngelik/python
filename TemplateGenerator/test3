@@ -1,0 +1,1 @@
+c:\zabbix\zabbix_sender.exe -z %z_server% -s %z_host% -k %z_key#N#% -o %result_#N#%
