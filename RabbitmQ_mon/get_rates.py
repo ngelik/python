@@ -48,5 +48,5 @@ elif argv[1] == "publish_details_sum":
     print get_rates_sum(get_data(url, usr, pwd), "publish_details")
 else: 
     #for degug
-    #print get_rates(get_data(url, usr, pwd), "MTSPROD-niagaraEntryAsyncProtocol-pc-mtspso", "deliver_get_details")
+    #print get_rates(get_data(url, usr, pwd), "queue_name", "deliver_get_details")
     print get_rates(get_data(url, usr, pwd), argv[1], argv[2])
