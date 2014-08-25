@@ -5,11 +5,14 @@ import urllib2, base64
 from sys import argv
 
 
-url="http://127.0.0.1:15672/api/queues"
+url_queues="http://127.0.0.1:15672/api/queues"
+url_overview="http://127.0.0.1:15672/api/overview"
+url_res="http://127.0.0.1:15672/api/nodes"
 usr="monitor_user"
 pwd="monitor_pwd"
 
-#rate_types = ["deliver_get_details", "publish_details"]
+# q_rate_types = ["deliver_no_ack_details", "publish_details", "ack_details", "get_details"]
+# a_rate_types = ["confirm_details"]
 
 def get_data(url, usr, pwd):
     try:
@@ -25,7 +28,7 @@ def get_data(url, usr, pwd):
     except Exception,e:
 	return None
 
-def get_rates(data, queue_name, rate_type):
+def get_queues_rates(data, queue_name, rate_type):
     try:
         rates = [item for item in data
 	    if item["name"] == queue_name]	
@@ -39,14 +42,26 @@ def get_rates(data, queue_name, rate_type):
     
 
 def get_rates_sum(data, rate_type):
-    return sum((data[i]["message_stats"][rate_type]["rate"]) for i in range(0, int(len(data))))
+    return data["message_stats"][rate_type]["rate"]
+                                
+
+def get_resources_info(data, res_type):
+    return data[0][res_type]
+
     
-    
-if argv[1] == "deliver_get_details_sum":
-    print get_rates_sum(get_data(url, usr, pwd), "deliver_get_details")
+if argv[1] == "deliver_no_ack_sum":
+    print get_rates_sum(get_data(url_overview, usr, pwd), "deliver_no_ack_details")
 elif argv[1] == "publish_details_sum":
-    print get_rates_sum(get_data(url, usr, pwd), "publish_details")
+    print get_rates_sum(get_data(url_overview, usr, pwd), "publish_details")
+elif argv[1] == "ack_details_sum":
+    print get_rates_sum(get_data(url_overview, usr, pwd), "ack_details")
+elif argv[1] == "get_details_sum":
+    print get_rates_sum(get_data(url_overview, usr, pwd), "get_details")
+elif argv[1] == "confirm_details_sum":
+    print get_rates_sum(get_data(url_overview, usr, pwd), "confirm_details")        
+elif argv[1] == "res":
+    print get_resources_info(get_data(url_res, usr, pwd), argv[2])        
 else: 
     #for degug
-    #print get_rates(get_data(url, usr, pwd), "queue_name", "deliver_get_details")
-    print get_rates(get_data(url, usr, pwd), argv[1], argv[2])
+    #print get_rates(get_data(url, usr, pwd), "MTSPROD-niagaraEntryAsyncProtocol-pc-mtspso", "deliver_get_details")
+    print get_queues_rates(get_data(url_queues, usr, pwd), argv[1], argv[2])
