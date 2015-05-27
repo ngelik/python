@@ -1,0 +1,1 @@
+python /etc/zabbix/scripts/rabbitmq/run.py rabbitmq_metrics Rabbitmq_Metrics $*
